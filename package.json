@@ -10,9 +10,12 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@townsquarelabs/ui-vue": "^2.0.10-beta.0",
     "nuxt": "^3.13.0",
+    "punycode": "^2.3.1",
     "vue": "latest",
     "vue-router": "latest",
-    "vue-tg": "^0.8.0"
+    "vue-tg": "^0.8.0",
+    "vue-tsc": "^2.1.6"
   }
 }

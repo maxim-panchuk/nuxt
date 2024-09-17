@@ -1,0 +1,5 @@
+tunnels:
+  ui:
+    commandLine: tuna http localhost:3000
+  server:
+    commandLine: tuna http localhost:8080

@@ -1,58 +1,91 @@
+<!-- ProfilePage.vue -->
 <script lang="ts" setup>
-
 import { ref, onMounted } from 'vue';
-const { MainButton, useWebAppPopup, useWebApp } = await import('vue-tg');
-const { showAlert } = useWebAppPopup();
-const { initData } = useWebApp();
-
+import { useRouter } from 'vue-router';
+const { showAlert } = await import('vue-tg').then(mod => mod.useWebAppPopup());
+const { initData } = await import('vue-tg').then(mod => mod.useWebApp());
 
 const walletAddress = ref<string | null>(null);
 const walletBalance = ref<number | null>(null);
-const walletStatus = ref<string>('Проверяем наличие кошелька...');
-
+const walletStatus = ref<string>('Checking wallet...');
+const router = useRouter();
 
 async function checkWallet() {
-    try {
-        console.log(initData)
-        const url = 'https://da2f-88-201-232-88.ngrok-free.app/check-wallet';
-        const resp = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'ngrok-skip-browser-warning': '1',
-                'Content-Type': 'text/plain',
-            },
-            body: initData,
-        });
-        if (resp.ok) {
-            const data = await resp.json();
-            console.log(data)
-            walletAddress.value = data.address;
-            walletBalance.value = data.balance
-            walletStatus.value = 'Кошелек найден';
-        } else {
-            showAlert('Ошибка при проверке кошелька');
-        }
-    } catch (err) {
-        showAlert(`Ошибка запроса: ${err}`);
+  try {
+    const url = 'https://v4wrpf-162-55-38-246.ru.tuna.am/check-wallet';
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+      body: initData,
+    });
+    if (resp.ok) {
+      const data = await resp.json();
+      walletAddress.value = data.address;
+      walletBalance.value = data.balance;
+      walletStatus.value = 'Wallet found';
+    } else {
+      showAlert('Error checking wallet');
     }
+  } catch (err) {
+    showAlert(`Request error: ${err}`);
+  }
 }
 
-
 onMounted(() => {
-    checkWallet();
+  checkWallet();
 });
+
+function navigateToTopUp() {
+  console.log(walletAddress.value)
+  router.push({ name: 'TopUpPage', state: { walletAddress: walletAddress.value} });
+}
 </script>
 
 <template>
-  <section>
-    <h1>Информация о кошельке</h1>
-    <div>
-        <p>Адрес кошелька: {{ walletAddress }}</p>
-        <p>Баланс: {{ walletBalance }}</p>
+  <section class="wallet-container">
+    <div class="wallet-info">
+      <p class="balance-text">{{ walletBalance !== null ? `${walletBalance} TON` : walletStatus }}</p>
     </div>
+    <button class="top-up-button" @click="navigateToTopUp">Top up</button>
   </section>
 </template>
 
-<style>
+<style scoped>
+.wallet-container {
+  background-color: #1C1C1E; /* Темный фон */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
+.wallet-info {
+  margin-bottom: 20px;
+}
+
+.balance-text {
+  color: white; /* Белый текст */
+  font-size: 48px; /* Крупный шрифт для баланса */
+  font-weight: bold;
+  font-family: 'SF Pro Display', sans-serif; /* Шрифт как в Telegram */
+}
+
+.top-up-button {
+  background-color: #007AFF; /* Синий цвет кнопки */
+  color: white; /* Белый цвет текста на кнопке */
+  border: none;
+  border-radius: 12px;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-family: 'SF Pro Display', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.top-up-button:hover {
+  background-color: #005BBB; /* Темнее при наведении */
+}
 </style>
