@@ -101,18 +101,29 @@
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
+    align-items: flex-end; /* Всплывание снизу */
     justify-content: center;
-    align-items: center;
   }
   
   .modal-content {
     background-color: #1C1C1E;
-    width: 90%;
+    width: 100%;
     max-width: 500px;
-    border-radius: 20px;
+    border-radius: 20px 20px 0 0;
     padding: 20px;
     position: relative;
     color: white;
+    animation: slide-up 0.3s ease;
+  }
+  
+  /* Анимация для появления окна снизу */
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
   }
   
   /* Кнопка закрытия */
@@ -122,12 +133,16 @@
     left: 10px;
     background: none;
     border: none;
-    font-size: 24px;
+    font-size: 18px;
     color: white;
     cursor: pointer;
   }
   
   /* Заголовок и подзаголовок */
+  .modal-header {
+    text-align: center; /* Выровнять текст по центру */
+  }
+  
   .modal-header h2 {
     font-size: 24px;
     margin-bottom: 5px;
@@ -143,13 +158,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 80%; /* Уменьшение ширины кнопки */
     background-color: #007AFF;
     color: white;
-    padding: 15px;
+    padding: 12px; /* Уменьшение padding */
     border-radius: 10px;
-    margin: 20px 0;
-    font-size: 18px;
+    margin: 20px auto; /* Центрирование кнопки */
+    font-size: 16px; /* Уменьшение шрифта */
     border: none;
     cursor: pointer;
   }
@@ -166,6 +181,7 @@
     gap: 15px;
     overflow-x: auto;
     padding: 10px 0;
+    justify-content: center;
   }
   
   .wallet-list button {
