@@ -6,8 +6,8 @@
       <!-- Модальное окно -->
       <div v-if="isModalVisible" class="modal-backdrop" @click="closeModal">
         <div class="modal-content" @click.stop>
-          <!-- Кнопка закрытия -->
-          <button class="close-button" @click="closeModal">✕</button>
+          <!-- Текст "Закрыть" вместо кнопки закрытия с небольшим отступом -->
+          <button class="close-text" @click="closeModal">Закрыть</button>
   
           <!-- Заголовок и подзаголовок -->
           <div class="modal-header">
@@ -109,6 +109,7 @@
     background-color: #1C1C1E;
     width: 100%;
     max-width: 500px;
+    height: auto; /* Автоматическая высота */
     border-radius: 20px 20px 0 0;
     padding: 20px;
     position: relative;
@@ -126,16 +127,17 @@
     }
   }
   
-  /* Кнопка закрытия */
-  .close-button {
+  /* Кнопка "Закрыть" */
+  .close-text {
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 20px; /* Добавлен отступ слева */
     background: none;
     border: none;
-    font-size: 18px;
-    color: white;
+    font-size: 14px;
+    color: #007AFF; /* Синий цвет в стиле Telegram */
     cursor: pointer;
+    text-transform: none; /* Сделано с маленькой буквы */
   }
   
   /* Заголовок и подзаголовок */
