@@ -12,7 +12,7 @@ const router = useRouter();
 
 async function checkWallet() {
   try {
-    const url = 'https://v4wrpf-162-55-38-246.ru.tuna.am/check-wallet';
+    const url = 'https://m2y5ao-88-201-232-88.ru.tuna.am/check-wallet';
     const resp = await fetch(url, {
       method: 'POST',
       headers: {

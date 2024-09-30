@@ -2,7 +2,6 @@
     <div>
       <!-- Кнопка для открытия модального окна -->
       <button @click="openModal" class="open-button">Connect your wallet</button>
-  
       <!-- Модальное окно -->
       <div v-if="isModalVisible" class="modal-backdrop" @click="closeModal">
         <div class="modal-content" @click.stop>
@@ -16,7 +15,7 @@
           </div>
   
           <!-- Кнопка для открытия кошелька в Telegram -->
-          <button class="telegram-button" @click="showAlert('Telegram Wallet')">
+          <button class="telegram-button" @click="connectTelegramWallet">
             <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" />
             Open Wallet in Telegram
           </button>
@@ -55,7 +54,7 @@
   
   <script setup>
   import { ref } from 'vue';
-  
+  import { TonConnectUI } from '@tonconnect/ui'
   // Состояние для видимости модального окна
   const isModalVisible = ref(false);
   
@@ -73,6 +72,25 @@
   function showAlert(walletName) {
     alert(`Selected: ${walletName}`);
   }
+
+  async function connectTelegramWallet() {
+    try {
+      const url = 'https://m2y5ao-88-201-232-88.ru.tuna.am/connect-wallet'
+      const resp = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+      });
+      if (resp.ok) {
+        const data = await resp.text();
+        showAlert(data)
+      }
+    } catch (err) {
+      showAlert(`Request error: ${err}`)
+    }
+  }
+
   </script>
   
   <style scoped>

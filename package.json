@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@tonconnect/ui": "^2.0.10-beta.0",
     "@townsquarelabs/ui-vue": "^2.0.10-beta.0",
     "nuxt": "^3.13.0",
     "punycode": "^2.3.1",
